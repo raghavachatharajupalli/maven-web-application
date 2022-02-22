@@ -1,5 +1,5 @@
 #Namespace for application
-# kubectl create secret docker-registry dockerprivatecreds --docker-server=https://registry.hub.docker.com/ --docker-username=****** --docker-password=*****
+# kubectl create secret docker-registry ecrprivatecreds --docker-server=592974205840.dkr.ecr.ap-south-1.amazonaws.com --docker-username=AWS --docker-password=*****
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -56,7 +56,7 @@ spec:
         env: dev
     spec:
       imagePullSecrets:
-      - name: dockerprivatecreds   
+      - name: ecrprivatecreds   
       containers:
       - name: maven-web-app-cn
         image: registry.hub.docker.com/raghavaatdocker/mavenweb-jenkins:ph-maven-app-tag
