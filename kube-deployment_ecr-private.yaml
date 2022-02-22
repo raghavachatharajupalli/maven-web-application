@@ -59,6 +59,6 @@ spec:
       - name: ecrprivatecreds   
       containers:
       - name: maven-web-app-cn
-        image: registry.hub.docker.com/raghavaatdocker/mavenweb-jenkins:ph-maven-app-tag
+        image: 592974205840.dkr.ecr.ap-south-1.amazonaws.com/maven-web-app:ph-maven-app-tag
         ports:
         - containerPort: 8080
