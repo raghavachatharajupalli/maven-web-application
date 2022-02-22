@@ -60,6 +60,6 @@ spec:
       - name: dockerprivatecreds   
       containers:
       - name: maven-web-app-cn
-        image: registry.hub.docker.com/raghavaatdocker/mavenweb-jenkins:tagplaceholder
+        image: registry.hub.docker.com/raghavaatdocker/mavenweb-jenkins:ph-maven-app-tag
         ports:
         - containerPort: 8080
