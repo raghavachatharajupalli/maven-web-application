@@ -109,6 +109,16 @@
 	    
 	</distributionManagement>
 	
+	<profiles>
+        <!-- skip unit test -->
+        <profile>
+            <id>no-tests</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+    </profiles>
+	
 	<build>
 		<finalName>maven-web-application</finalName>
 		

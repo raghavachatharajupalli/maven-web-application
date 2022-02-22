@@ -1,0 +1,65 @@
+#Namespace for application
+# kubectl create secret docker-registry dockerprivatecreds --docker-server=https://registry.hub.docker.com/ --docker-username=****** --docker-password=*****
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: maven-web-app
+---
+
+#Service for accessing application outside of cluster
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: maven-web-app-svc
+  namespace: maven-web-app
+spec:
+  type: NodePort
+  selector:
+    appname: mavenwebapp
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30303
+---
+
+#Pod spec as part of Deployment for HA
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maven-web-app-dep
+  namespace: maven-web-app
+spec:
+  replicas: 2
+  minReadySeconds: 60
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      appname: mavenwebapp
+    matchExpressions:
+    - key: env
+      operator: In
+      values:
+      - dev
+      - qa	
+  template:
+    metadata:
+      name: maven-web-app-cn
+      labels:
+        appname: mavenwebapp
+        env: dev
+    spec:
+      imagePullSecrets:
+      - name: dockerprivatecreds   
+      containers:
+      - name: maven-web-app-cn
+        image: registry.hub.docker.com/raghavaatdocker/mavenweb-jenkins:tagplaceholder
+        ports:
+        - containerPort: 8080
